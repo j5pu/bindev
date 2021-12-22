@@ -23,8 +23,8 @@ build: tests
 
 publish: build
 	@echo $(next)
-	@git tag $(next)
-	@git push --quiet --tags
+	@#git tag $(next)
+	@#git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@ls -la $(tmp_publish)
 #	@twine upload $(tmp_publish)/dist/*
