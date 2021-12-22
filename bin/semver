@@ -1,3 +1,64 @@
 #!/usr/bin/env bash
+#
+# Semantic version wrapper for svu to raise version if not version is raised with svu (patch)
+set -euo pipefail
+shopt -s inherit_errexit
 
+#######################################
+# svu wrapper with strip prefix
+# Arguments:
+#  None
+#######################################
+svu() { command svu --strip-prefix "$@"; }
 
+#######################################
+# raises version to patch if svu next is not raising it and shows version if not git tags
+# Arguments:
+#  [current|major|minor|next|patch|--desc|--help|--version] [directory]
+#######################################
+main() {
+  local arg cmd='current' current path='.' next top
+  for arg do
+    shift
+    case "${arg}" in
+      current|major|minor|next|patch) cmd="${arg}" ;;
+      --parsed) : ;;
+      --desc|--help|--version) . helper.sh && parse "${arg}"; exit ;;
+      *) path="${arg}" ;;
+    esac
+  done
+  if [ -d "${path}" ]; then
+    cd "${path}"
+  else
+    echo "$0: ${path}: No such directory"
+    exit 1
+  fi
+
+  if top="$(git top)"; then
+    cd "${top}"
+  else
+    echo "$0: $(pwd): Not a git repository"; exit 1
+  fi
+
+  if git tags >/dev/null; then
+    if [ "${cmd}" = 'next' ]; then
+      current="$(svu current "$@")"; next="$(svu next "$@")"
+      if [ "${current}" = "${next}" ]; then
+        svu patch "$@"
+      else 
+        echo "${next}"
+      fi
+    else
+      svu "${cmd}" "$@"
+    fi
+  else
+    case "${cmd}" in
+      major) echo '1.0.0' ;;
+      minor|next) echo '0.1.0' ;;
+      patch) echo '0.0.1' ;;
+      current) : ;;
+    esac
+  fi
+}
+
+main "$@"

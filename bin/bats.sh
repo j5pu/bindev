@@ -8,10 +8,10 @@
 # </html>
 BATS_SHARE="/usr/local/share/${BASH_SOURCE[0]##*/}"; export BATS_SHARE
 
-# <html><h2>Bats Core Executable</h2>
-# <p><strong><code>$BATS_SHARE_EXE</code></strong> contains the bats core executable.</p>
+# <html><h2>Bats Core Executable PATH</h2>
+# <p><strong><code>$BATS_SHARE_EXE</code></strong> contains the bats core executable path.</p>
 # </html>
-BATS_SHARE_EXE="${BATS_SHARE}/bats-core/bin/bats"; export BATS_SHARE_EXE
+BATS_EXE_PATH="${BATS_SHARE}/bats-core/bin"; export BATS_EXE_PATH
 
 # <html><h2>Bats Test Filename Prefix</h2>
 # <p><strong><code>$BATS_TEST_PREFIX</code></strong> prefix of BATS_TEST_DIRNAME basename.</p>
@@ -72,7 +72,7 @@ ${2:+[$(blue "${2}")]}" >&3
 # shellcheck disable=SC1090
 bats::libs() {
   local d i
-  for i in bats-assert bats-core bats-file; do
+  for i in bats-assert bats-core bats-file bats-support; do
     d="${BATS_SHARE}/${i}"
     if [ ! -d "${d}" ]; then
       git clone --quiet https://github.com/bats-core/"${i}".git "${d}"
@@ -138,7 +138,7 @@ bats::tests() {
 #######################################
 bats::main() {
   [ "${BATS_TOP-}" ] || { echo "$0: ${BATS_TOP}: No git top directory"; exit 1; }
-  PATH="${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_SHARE_EXE}:${PATH}"
+  PATH="${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
   if echo "$0" | grep -q 'bats.sh$'; then
     set -eu
     clean=false; verbose=false

@@ -4,20 +4,15 @@ SHELL := $(shell command -v bash)
 DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 export BASH_ENV := $(DIR).envrc
 basename := $(shell basename $(DIR))
-svu := svu --strip-prefix
-current := $(shell $(svu) current)
-next := $(shell $(svu) next)
-patch := $(shell $(svu) patch)
-tag := git tag --quiet
-version := $(shell [ $(current) = $(next) ] && echo $(patch) || echo $(next) )
+next := $(shell bin/semver next)
 
 build:
 	@git commit -a -m 'pre-build' || true
-	@git tag $(version)
+	@git tag $(next)
 	@python3.9 -m build  $(DIR)
 
 bump:
-	@echo $(version)
+	@echo $(next)
 	@git push --quiet --tags
 
 clean:
@@ -27,10 +22,7 @@ clean:
 	@bin/bats.sh --clean
 
 env:
-	@echo $(current)
 	@echo $(next)
-	@echo $(patch)
-	@echo $(version)
 
 install: upload
 	@pip3.9 install --upgrade $(basename)

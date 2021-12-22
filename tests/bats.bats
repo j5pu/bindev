@@ -1,9 +1,6 @@
 #!/usr/bin/env bats
 
-setup() {
-  PATH="$(git top)/bin:${PATH}"
-  . bats.sh
-}
+setup() { load helpers/test_helper; }
 
 @test "status " {
   run true
