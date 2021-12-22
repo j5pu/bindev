@@ -23,12 +23,11 @@ build: tests
 
 publish: build
 	@echo $(next)
-	@#git tag $(next)
-	@#git push --quiet --tags
+	@git tag $(next)
+	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
-	@ls -la $(tmp_publish)
-#	@twine upload $(tmp_publish)/dist/*
-#	@sleep 10; python3.9 -m pip install --upgrade $(basename)
+	@twine upload $(tmp_publish)/*
+	@sleep 10; python3.9 -m pip install --upgrade $(basename)
 #
 install-local-wheel-force: build
 	@pip3.9 install --force-reinstall dist/*.whl
