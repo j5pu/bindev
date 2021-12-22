@@ -19,7 +19,6 @@ tests: clean
 
 build: tests
 	@git commit -a -m "$(next): build" || true
-	@git tag $(next)
 	@python3.9 -m build -o $(tmp_build) $(DIR)
 
 publish: build
