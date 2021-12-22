@@ -5,7 +5,8 @@ DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 export BASH_ENV := $(DIR).envrc
 basename := $(shell basename $(DIR))
 next := $(shell bin/semver next)
-tmpdir := $(shell mktemp -d)
+tmp_build := $(shell mktemp -d)
+tmp_publish := $(shell mktemp -d)
 
 clean:
 	@rm -rf $(DIR)build
@@ -19,14 +20,14 @@ tests: clean
 build: tests
 	@git commit -a -m "$(next): build" || true
 	@git tag $(next)
-	@python3.9 -m build -o $(tmpdir) $(DIR)
+	@python3.9 -m build -o $(tmp_build) $(DIR)
 
 publish: build
 	@echo $(next)
 	@git tag $(next)
 	@git push --quiet --tags
-	@python3.9 -m build $(DIR)
-	@twine upload dist/*
+	@python3.9 -m build -o $(tmp_publish) $(DIR)
+	@twine upload $(tmp_publish)/dist/*
 	@sleep 10; python3.9 -m pip install --upgrade $(basename)
 
 install-local-wheel-force: build
