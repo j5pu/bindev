@@ -91,6 +91,7 @@ commit() {
   cd "$(repo '')"
   path="$(pwd)"
   cd /tmp
+
   run semver next "${path}"
   assert_success
   assert_output '0.1.1'
