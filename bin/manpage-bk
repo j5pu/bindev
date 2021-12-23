@@ -4,46 +4,7 @@
 # Converts, tests and commit changes for AsciiDoc man pages in a repository.
 STRICT=1 . helpers.lib || exit 1
 
-adoc() {
-  asciidoctor -b manpage \
-    -a doctitle="${top_left}" \
-    -a author="${author}" \
-    -a manmanual="${top_center}" \
-    -a mansource="${bottom_left}" \
-    -a name="${name}" \
-    -a desc="${desc}" \
-    -a owner="${owner}" \
-    -a repo="${repo}" \
-    -o "${1}" "${file}"
-  tests "${1}"
-}
 
-changed() {
-  git add "${1}" && git commit --quiet -m "${script}" "${1}" >/dev/null 2>&1 && git push --quiet
-  true
-}
-
-run() {
-  tmp_run="$(mktemp -d)"
-  [ -d "${dest_dir}" ] || { mkdir -p "${dest_dir}"; touch "${dest_dir}/.gitkeep"; changed "${dest_dir}/.gitkeep"; }
-
-  if [ -f "${dest_file}" ]; then
-    tmp_file="${tmp_run}/${dest_filename}"
-    adoc "${tmp_file}" && if ! cmp -s "${dest_file}" "${tmp_file}"; then
-      mv "${tmp_file}" "${dest_file}"
-      changed "${dest_file}"
-    fi
-  else
-    adoc "${dest_file}" && changed "${dest_file}"
-  fi
-  unset tmp_run
-}
-
-tests() {
-    man -P cat "${1}" | grep -qE \
-    "^${top_left}| ${top_center} |${top_right}$|^${bottom_left}|${name}| ${author} " \
-    || die Test Failed: man -P cat "${1}"
-}
 
 main() {
   if test "$#" -eq 0 || { test "${1-}" = '--parsed' && shift; }; then
@@ -99,7 +60,6 @@ main() {
       run
     done < "${tmp_main}"
     unset capitilize
-    postparse
   else
     PARSE="${0}" parse "$@"
   fi

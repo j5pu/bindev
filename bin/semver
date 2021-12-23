@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Semantic version wrapper for svu to raise version if not version is raised with svu (patch)
+# semantic version wrapper for svu to raise version if not version is raised with svu (patch)
 set -euo pipefail
 shopt -s inherit_errexit
 
@@ -13,9 +13,9 @@ shopt -s inherit_errexit
 svu() { command svu --strip-prefix "$@"; }
 
 #######################################
-# raises version to patch if svu next is not raising it and shows version if not git tags
+# semantic version wrapper for svu to raise version if not version is raised with svu (patch)
 # Arguments:
-#  [current|major|minor|next|patch|--desc|--help|--version] [directory]
+#   1    [current|major|minor|next|patch|--desc|--help|--manrepo|--version] [directory]
 #######################################
 main() {
   local arg cmd='current' current path='.' next top

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Add & updates bats libraries, sources libraries, set helper variables and run bats tests.
+# add & updates bats libraries, sources libraries, set helper variables and run bats tests.
 #
 
 # <html><h2>Installation Directory for Bats and Bats Libraries</h2>
@@ -148,7 +148,7 @@ bats::main() {
         --force) bats::libs "${arg}" ;;
         --tests*) bats::tests "${arg}" ;;
         --verbose*) verbose=true; bats::tests "${arg}" ;;
-        --desc|--help|--version) COMMAND="${0##*/}" fromman ;;
+        --desc|--help|-manrepo|--version) COMMAND="${0##*/}" fromman ;;
       esac
       exit
     done

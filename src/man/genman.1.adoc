@@ -1,0 +1,110 @@
+= doctitle(1)
+:doctype: manpage
+:man-linkstyle: pass:[blue R < >]
+:page-layout: base
+
+== NAME
+
+*{name}* - {desc}
+
+== SYNOPSIS
+
+*{name}* [_INFO ARGUMENT_] [_COMMON OPTION_] [_OPTIONAL ARGUMENT_] _ARGUMENT_...
+
+== DESCRIPTION
+
+The *{name}* command
+
+== OPTIONS
+
+// tag::options[]
+
+=== ARGUMENTS
+
+*ARGUMENT*::
+Required _ARGUMENT_.
+
+=== OPTIONAL ARGUMENTS
+
+*--optional*::
+_OPTIONAL_ argument.
+
+=== COMMON OPTIONS
+
+*--debug*::
+Show debug output.
+
+*--quiet*::
+Silent output.
+
+*--warning*::
+Show warnings.
+
+*--verbose*::
+Verbose output.
+
+=== INFO ARGUMENTS
+
+*-h, --help*::
+Show man page and exit.
+
+*--desc*::
+Show one line description and exit.
+
+*--version*::
+Show version and exit.
+
+// end::options[]
+
+== EXIT STATUS
+
+*0*::
+Success.
+
+*1*::
+Error. +
+
+=== ENVIRONMENT
+
+*DEBUG*::
+Set *DEBUG*=_1_ for debug output (_default_: _unset_).
+
+*QUIET*::
+Set *QUIET*=_1_ to silent output (_default_: _error_ and _ok_ messages are shown).
+*QUIET* takes precedence over _DEBUG_, _VERBOSE_ and _WARNING_.
+
+*VERBOSE*::
+Set *VERBOSE*=_1_ to show verbose messages (_default_: _unset_).
+
+*WARNING*::
+Set *WARNING*=_1_ to show warning messages (_default_: _unset_).
+
+=== OUTPUT
+
+See _COMMON OPTIONS_ and _ENVIRONMENT_ sections.
+
+== EXAMPLES
+
+_$_ *{name}*
+
+--
+_$_ *{name}*
+output
+--
+
+== REPOSITORY
+
+{repo}
+
+== RESOURCES
+
+*GitHub:* https://github.com/{owner}/{repo}
+
+== COPYING
+
+Copyright (C) 2021-present {author}. +
+Free use of this software is granted under the terms of the MIT License.
+
+== SEE ALSO
+
+manpage(1)

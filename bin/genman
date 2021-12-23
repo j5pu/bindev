@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+
+#
+# converts, tests and commit changes for AsciiDoc man pages in a repository
+set -euo pipefail
+shopt -s inherit_errexit
+
+#######################################
+# generate man page
+# Globals:
+#   author        The author.
+#   bottom_left   Button left text of man page.
+#   desc          Command description for NAME section.
+#   file          Input ascii doctor file.
+#   name          Command or function name.
+#   owner         Git repository owner.
+#   repo          Git repository name.
+#   top_center    Top center text of man page.
+#   top_left      Top left text of man page.
+# Arguments:
+#   1             Output directory.
+#######################################
+adoc() {
+  asciidoctor -b manpage \
+    -a doctitle="${top_left}" \
+    -a author="${author}" \
+    -a manmanual="${top_center}" \
+    -a mansource="${bottom_left}" \
+    -a name="${name}" \
+    -a desc="${desc}" \
+    -a owner="${owner}" \
+    -a repo="${repo}" \
+    -o "${1}" "${file}"
+  tests "${1}"
+}
+
+#######################################
+# git for generated file if file has changed
+# Globals:
+#   src_file      Command source code.
+#######################################
+changed() {
+  git add "${1}" && git commit --quiet -m "${script}" "${1}" >/dev/null 2>&1 && git push --quiet
+  true
+}
+
+#######################################
+# extract description for header in file
+# Globals:
+#   src_file      Command source code.
+#######################################
+desc-file(){
+  awk '/^#/ && ! /^#!/ && ! /^##/ && ! /^#$/ && ! /^# shellcheck/ {sub(/^# /, ""); print $0=$0 }' \
+    "${src_file}" | head -1 | sed 's/\.$//'
+}
+
+
+#######################################
+# extract description for function in file
+# Globals:
+#   src_file      Command source code.
+# Arguments:
+#   1             Function name.
+#######################################
+desc-func() {
+  local line_comment="#######################################"
+  if grep -qE "^${1}\(\) {" "${src_file}"; then
+    tail -r "${src_file}"| awk "/^${1}\() {/{f=1; c=0} f; /${line_comment}/ && ++c==2{f=0}" | \
+    grep -v "${line_comment}" | sed 's/^# //' | tail -1 | sed 's/\.$//'
+  fi
+}
+
+#######################################
+# description
+# Globals:
+#   dest_dir      Destination directory.
+#   dest_file     Destination file path.
+#   dest_filename Destination filename.
+#   tmp_file      Temp file.
+#   tmp_run       Another temp file.
+# Arguments:
+#  None
+#######################################
+run() {
+  local tmp_file tmp_run
+  tmp_run="$(mktemp -d)"
+  [ -d "${dest_dir}" ] || { mkdir -p "${dest_dir}"; touch "${dest_dir}/.gitkeep"; changed "${dest_dir}/.gitkeep"; }
+
+  if [ -f "${dest_file}" ]; then
+    tmp_file="${tmp_run}/${dest_filename}"
+    adoc "${tmp_file}" && if ! cmp -s "${dest_file}" "${tmp_file}"; then
+      mv "${tmp_file}" "${dest_file}"
+      changed "${dest_file}"
+    fi
+  else
+    adoc "${dest_file}" && changed "${dest_file}"
+  fi
+  unset tmp_run
+}
+
+#######################################
+# test generated man page
+# Globals:
+#   author        The author.
+#   bottom_left   Button left text of man page.
+#   name          Command or function name.
+#   top_center    Top center text of man page.
+#   top_left      Top left text of man page.
+#   top_right     Top right text of man page.
+# Arguments:
+#   1             Generated man page.
+#######################################
+tests() {
+    man -P cat "${1}" | grep -qE \
+    "^${top_left}| ${top_center} |${top_right}$|^${bottom_left}|${name}| ${author} " \
+    || { echo Test Failed: man -P cat "${1}"; exit 1; }
+}
+
+#######################################
+# converts, tests and commit changes for AsciiDoc man pages in a repository
+# Globals:
+#   author        The author.
+#   bottom_left   Button left text of man page.
+#   desc          Command description for NAME section,obtained from main function or header in scripts
+#                 and from function in libraries.
+#   dest_dir      Destination directory.
+#   dest_file     Destination file path
+#   dest_filename Destination filename.
+#   file          Input ascii doctor file.
+#   name          Command or function name.
+#   owner         Git repository owner.
+#   repo          Git repository name.
+#   src_file      Command source code.
+#   top_center    Top center text of man page.
+#   top_left      Top left text of man page.
+#   top_right     Top right text of man page.
+# Arguments:
+#   1             [--desc|--help|--manrepo|--version] [directory]
+#######################################
+main(){
+  local arg dirs path='.' section src version
+
+  for arg do
+    shift
+    case "${arg}" in
+      --desc|--help|-manrepo|--version) COMMAND="${0##*/}" fromman; exit ;;
+      *) cd "${arg}" || { "$0: ${path}: No such directory"; exit 1; };;
+    esac
+  done
+
+  cd "$(git top || { echo "$0: $(pwd): Not a git repository"; exit 1; } )"
+
+  author="$(git config user.username || { echo "$0: $(pwd): Invalid git username"; exit 1; })"
+  owner="$(git owner || { echo "$0: $(pwd): Invalid git owner"; exit 1; })"
+  repo="$(git name || { echo "$0: $(pwd): Invalid git repo name"; exit 1; })"
+  script=${0##*/}
+  version=$(semver next || { echo "$0: $(pwd): Invalid next semver"; exit 1; })
+
+  while read -r file; do
+    src="${file%.*}"
+    name="${src##*/}"  # name.1 or name
+    case "${name}" in
+      README)
+        name="$(head -1 README.adoc | awk -F '[()= ]' '/\([1-8])/ { print $3 }')"
+        [ "${name}" != 'doctitle' ] || { echo Invalid Doctitle for README.adoc: "${name}"; exit 1; }
+        section="$(head -1 README.adoc | awk -F '[()= ]' '/\([1-8])/ { print $4 }')"
+        ;;
+      *.[1-8]) section="${name##*.}"; name="${name%.*}"; ;;  # Do not change order !!!
+    esac
+
+    dirs=()
+    for d in bin lib sbin; do
+      [ ! -d "${d}" ] || dirs+=("${d}")
+    done
+
+    src_file="$(find "${dirs[@]}" -type f -name "${name}")"
+
+    # TODO: container and images in this repo and from makefile, build/publish
+    if [ "${src_file}" ]; then
+      desc="$(desc-func 'main')"
+      [ "${desc-}" ] || desc="$(desc-file)"
+    else
+      while read -r src_file; do
+        desc="$(desc-func "${name}")"
+        [ "${desc-}" ] || break
+      done < <(find "${dirs[@]}" -type f -name "*.sh")
+    fi
+    [ "${desc-}" ] || { echo Invalid Desc for: "${name}"; exit 1; }
+
+    section="${section:-1}"
+
+    dest_filename="${name}.${section}"  # name.1
+
+    dest_dir="./share/man/man${section}"
+    dest_file="${dest_dir}/${dest_filename}"
+
+    bottom_left="${name^} ${version}"
+    top_center="${name^} Manual"
+    top_left="${name^^}(${section})"
+    top_right=${top_left}
+    run
+  done < <(find . ./src/man -type f \( -name "*.adoc" -o -name "README.adoc" \) -mindepth 1 -maxdepth 1)
+
+}
+
+main "$@"
