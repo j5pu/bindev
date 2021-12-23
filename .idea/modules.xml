@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bindev.iml" filepath="$PROJECT_DIR$/.idea/bindev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../binsh/.idea/binsh.iml" filepath="$PROJECT_DIR$/../binsh/.idea/binsh.iml" />
     </modules>
   </component>
 </project>

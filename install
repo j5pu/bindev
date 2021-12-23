@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
+
+set -eu
+
 python3.9 install --upgrade "$(git basename)"
 brew bundle --no-lock --quiet
