@@ -1,6 +1,4 @@
-tap "caarlos0/tap/svu"
-tap "homebrew/bundle"
-tap "homebrew/core"
+tap "caarlos0/tap"
 brew "asciidoctor"
 brew "twine-pypi"
 brew "caarlos0/tap/svu"

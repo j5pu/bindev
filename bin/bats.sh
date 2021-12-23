@@ -146,10 +146,9 @@ bats::main() {
       case "${arg}" in
         --clean*) clean=true; bats::tests "${arg}" ;;
         --force) bats::libs "${arg}" ;;
-        --parsed) : ;;
         --tests*) bats::tests "${arg}" ;;
         --verbose*) verbose=true; bats::tests "${arg}" ;;
-        *) . helper.sh && PARSE="$0" parse "${arg}" ;;
+        --desc|--help|--version) COMMAND="${0##*/}" fromman ;;
       esac
       exit
     done
