@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../devbin/.idea/devbin.iml" filepath="$PROJECT_DIR$/../devbin/.idea/devbin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bindev.iml" filepath="$PROJECT_DIR$/.idea/devbin.iml" />
     </modules>
   </component>
 </project>
