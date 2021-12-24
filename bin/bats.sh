@@ -31,6 +31,11 @@ BATS_TOP="$(git top)"; export BATS_TOP
 # </html>
 BATS_TOP_BASENAME="${BATS_TOP##*/}"; export BATS_TOP_BASENAME
 
+# <html><h2>Git Top Tests Path</h2>
+# <p><strong><code>$BATS_TOP_TESTS</code></strong> contains the git top directory with 'tests' basename added.</p>
+# </html>
+BATS_TOP_TESTS="${BATS_TOP}/tests"; export BATS_TOP_TESTS
+
 # <html><h2>Tests Jobs</h2>
 # <p><strong><code>$TESTS_JOBS</code></strong> contains number of parallel test jobs.</p>
 # <p>Global or sourced from '.envrc'.</p>
@@ -140,8 +145,8 @@ bats::tests() {
 bats::main() {
   [ "${BATS_TOP-}" ] || { echo "${0##*/}: ${BATS_TOP}: No git top directory"; exit 1; }
   PATH="${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
-  if [ "${BATS_TEST_DIRNAME-}" ] && [ -d "${BATS_TEST_DIRNAME}/bin" ]; then
-    PATH="${BATS_TEST_DIRNAME}/bin:${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
+  if [ -d "${BATS_TOP_TESTS}/bin" ]; then
+    PATH="${BATS_TOP_TESTS}/bin:${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
   fi
   if [ "${0##*/}" = 'bats.sh' ]; then
     set -eu
