@@ -23,7 +23,7 @@ main() {
     shift
     case "${arg}" in
       current|major|minor|next|patch) cmd="${arg}" ;;
-      --desc|--help|--manrepo|--version) COMMAND="${0##*/}" fromman; exit ;;
+      --desc|--help|--manrepo|--version) COMMAND="${0##*/}" parse-man "${arg}"; exit ;;
       *) path="${arg}" ;;
     esac
   done
@@ -31,14 +31,14 @@ main() {
   if [ -d "${path}" ]; then
     cd "${path}"
   else
-    echo "$0: ${path}: No such directory"
+    echo "${0##*/}: ${path}: No such directory"
     exit 1
   fi
 
   if top="$(git top)"; then
     cd "${top}"
   else
-    echo "$0: $(pwd): Not a git repository"; exit 1
+    echo "${0##*/}: $(pwd): Not a git repository"; exit 1
   fi
 
   if git tags >/dev/null; then

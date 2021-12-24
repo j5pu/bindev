@@ -143,17 +143,17 @@ main(){
   for arg do
     shift
     case "${arg}" in
-      --desc|--help|-manrepo|--version) COMMAND="${0##*/}" fromman; exit ;;
+      --desc|--help|--manrepo|--version) COMMAND="${0##*/}" parse-man "${arg}"; exit ;;
       *) cd "${arg}" || { "$0: ${path}: No such directory"; exit 1; };;
     esac
   done
 
-  cd "$(git top || { echo "$0: $(pwd): Not a git repository"; exit 1; } )"
+  cd "$(git top || { echo "${0##*/}: $(pwd): Not a git repository"; exit 1; } )"
 
   author="$(git config user.username || { echo "$0: $(pwd): Invalid git username"; exit 1; })"
   owner="$(git owner || { echo "$0: $(pwd): Invalid git owner"; exit 1; })"
   repo="$(git name || { echo "$0: $(pwd): Invalid git repo name"; exit 1; })"
-  script=${0##*/}
+  script="${0##*/}"
   version=$(semver next || { echo "$0: $(pwd): Invalid next semver"; exit 1; })
 
   while read -r file; do

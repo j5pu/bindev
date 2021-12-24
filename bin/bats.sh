@@ -81,7 +81,7 @@ bats::libs() {
    fi
     [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
   done
-  command -v assert_success >/dev/null || echo "$0": assert_success: command not found
+  command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
 }
 
 #######################################
@@ -107,7 +107,7 @@ bats::tests() {
     tests_root="${BATS_TOP}/tests"
   fi
 
-  [ -d "${tests_root}" ] || { echo "$0: ${tests_root}: No such directory"; exit 1; }
+  [ -d "${tests_root}" ] || { echo "${0##*/}: ${tests_root}: No such directory"; exit 1; }
   [ "${BATS_TOP-}" ] || { echo "$0: ${BATS_TOP}: No git top directory"; exit 1; }
   tmp='/tmp/bats'
   output="${tests_root}/output"; [ ! -d "${output}" ] || { mkdir -p "${tmp}"; rm -rf "${tmp}";mv "${output}" "${tmp}"; }
@@ -137,9 +137,9 @@ bats::tests() {
 #  1: [--desc|--help|-version]
 #######################################
 bats::main() {
-  [ "${BATS_TOP-}" ] || { echo "$0: ${BATS_TOP}: No git top directory"; exit 1; }
+  [ "${BATS_TOP-}" ] || { echo "${0##*/}: ${BATS_TOP}: No git top directory"; exit 1; }
   PATH="${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
-  if echo "$0" | grep -q 'bats.sh$'; then
+  if [ "${0##*/}" = 'bats.sh' ]; then
     set -eu
     clean=false; verbose=false
     for arg do
@@ -148,7 +148,7 @@ bats::main() {
         --force) bats::libs "${arg}" ;;
         --tests*) bats::tests "${arg}" ;;
         --verbose*) verbose=true; bats::tests "${arg}" ;;
-        --desc|--help|-manrepo|--version) COMMAND="${0##*/}" fromman ;;
+        --desc|--help|--manrepo|--version) COMMAND="${0##*/}" parse-man "${arg}";;
       esac
       exit
     done

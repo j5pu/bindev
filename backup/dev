@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+#
+# build and publish a package and waits for pypi availability to install it
+set -euo pipefail
+shopt -s inherit_errexit
+
+build() {
+  local std
+  output=(); $NO_TMP || output=(-o "${tmp:-$(mktemp -d)}")
+  genman
+  git commit --quiet -a -m "${1:+${1}:}: build" || true
+  std="$(mktemp)"
+  python3 -m build "${output[@]}" . &>"${std}" || die
+}
+
+clean() { rm -rf build dist ./*.egg-info tests/output; }
+
+die() {
+  if [ "${1-}" ]; then
+    echo "${0##*/}: $*"
+  elif [ -f "${std:-}" ]; then
+    cat "${std}"
+  fi
+  exit 1
+}
+
+install() {
+  local elapsed interval timeout
+  if [ "${PRIVATE-}" ]; then
+    # FIXME: if private git+ssh pip url
+    python3 -m pip install --quiet --upgrade "$(git url pip ssh)"
+  else
+    elapsed=0; interval=10, timeout=300
+    while ! curl -sL -o /dev/null --head --fail https://pypi.org/manage/project/"${NAME}"/release/"${VERSION}"; do
+      sleep $interval
+      ((elapsed+=interval))
+      [ $elapsed -lt $timeout ] || die "${NAME}[${VERSION}]: Timeout"
+    done
+    python3 -m pip install --quiet --upgrade "${NAME}"
+  fi
+}
+
+publish() {
+  tmp="$(mktemp -d)"
+  VERSION="$(semver next)"
+  git tag "${VERSION}"
+  git push --quiet --tags
+  build "${tmp}"
+  [ "${PRIVATE-}" ] || twine upload "${tmp}"/*
+  echo "$CURRENT ==> $VERSION"
+  install
+}
+
+requirements() { :; }
+
+tests() {
+  tests-run py
+  tests-run bats
+}
+
+tests-run() {
+  if find tests -type f -name "*test*.${1}" | grep -q ".${1}$"; then
+    case "${1}" in
+      bats) bats.sh --tests ;;
+      py) pytest ;;
+    esac
+  fi
+}
+
+venv() { :; }
+
+main() {
+  local arg func NO_BUILD_TMP=false PY=false path='.' PYPI=false
+
+  for arg do
+    shift
+    case "${arg}" in
+      build|clean|install|publish|requirements|tests|venv) func="${arg}" ;;
+      --no-build-tmp) NO_BUILD_TMP=true ;;
+      --desc|--help|--manrepo|--version) COMMAND="${0##*/}" parse-man "${arg}"; exit ;;
+      *) if [ ! "${path-}" ] && [ -d  "${arg}" ]; then path="${arg}"; else set -- "$@" "${arg}"; fi ;;
+    esac
+  done
+
+  if [ "${func-}" ]; then
+    cd "${path:-.}" || die "$(pwd)": Not such directory
+    cd "$(git top)" || die "$(pwd)": Not a git repository
+    if [ -f setup.cfg ]; then
+      PY=true
+      NAME="$(awk -F'[= ]' '/^name[=, ]/ { print $NF }' setup.cfg)"
+      [ "${NAME-}" ] || die Name: not found in setup.cfg
+      grep -q "Private :: Do Not Upload" setup.cfg || PYPI=true
+    fi
+    CURRENT="$(semver)"
+    "${func}" "$@"
+  else
+    COMMAND="${0##*/}" fromman --help
+  fi
+}
+main "$@"
