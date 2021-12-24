@@ -140,6 +140,9 @@ bats::tests() {
 bats::main() {
   [ "${BATS_TOP-}" ] || { echo "${0##*/}: ${BATS_TOP}: No git top directory"; exit 1; }
   PATH="${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
+  if [ "${BATS_TEST_DIRNAME-}" ] && [ -d "${BATS_TEST_DIRNAME}/bin" ]; then
+    PATH="${BATS_TEST_DIRNAME}/bin:${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
+  fi
   if [ "${0##*/}" = 'bats.sh' ]; then
     set -eu
     clean=false; verbose=false
