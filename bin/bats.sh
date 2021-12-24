@@ -88,6 +88,7 @@ bats::libs() {
     [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
   done
   command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
+  [ "${lines-}" ] || lines=()
 }
 
 #######################################
