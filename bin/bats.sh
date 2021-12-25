@@ -145,6 +145,7 @@ bats::tests() {
 bats::main() {
   [ "${BATS_TOP-}" ] || { echo "${0##*/}: ${BATS_TOP}: No git top directory"; exit 1; }
   PATH="${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
+  MANPATH="${BATS_TOP}/share/man:${MANPATH}"; export MANPATH
   if [ -d "${BATS_TOP_TESTS}/bin" ]; then
     PATH="${BATS_TOP_TESTS}/bin:${BATS_TOP}/bin:${BATS_TOP}/sbin:${BATS_EXE_PATH}:${PATH}"
   fi
