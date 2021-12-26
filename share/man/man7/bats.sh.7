@@ -45,6 +45,42 @@ The \fBbats.sh\fP command
 .RS 4
 \fIOPTION\fP one option.
 .RE
+.SS "Program Output"
+.sp
+\fB\-\-debug\fP
+.RS 4
+Show debug output.
+.RE
+.sp
+\fB\-\-dry\-run\fP
+.RS 4
+Show verbose output and do not execute the command.
+.RE
+.sp
+\fB\-\-no\-quiet\fP
+.RS 4
+Do not silent output for commands with default quiet mode, i.e.: git\-top, etc.
+.RE
+.sp
+\fB\-\-quiet\fP
+.RS 4
+Silent output.
+.RE
+.sp
+\fB\-\-warning\fP
+.RS 4
+Show warnings.
+.RE
+.sp
+\fB\-\-white\fP
+.RS 4
+Show captured output with no color.
+.RE
+.sp
+\fB\-\-verbose\fP
+.RS 4
+Verbose output.
+.RE
 .SH "ARGUMENTS"
 .sp
 \fBARGUMENT\fP
@@ -105,10 +141,46 @@ Error.
 .br
 .RE
 .SH "ENVIRONMENT"
-
+.SS "Program Output"
+.sp
+You can control output information using the options listed under \fIProgram Output\fP,
+or using the following environment variables:
+.br
+.sp
+\fBDEBUG\fP
+.RS 4
+Set \fBDEBUG\fP=\fI1\fP for debug output (\fIdefault\fP: \fI0\fP).
+.RE
+.sp
+\fBDRY_RUN\fP
+.RS 4
+Set \fBDRY_RUN\fP=\fI1\fP for verbose output and do not execute the command (\fIdefault\fP: \fI0\fP).
+.RE
+.sp
+\fBNO_QUIET\fP
+.RS 4
+Set \fBNO_QUIET\fP=\fI1\fP to not silent output for commands with default quiet mode, i.e.: git\-top, etc. (\fIdefault\fP: \fI0\fP).
+.RE
+.sp
+\fBQUIET\fP
+.RS 4
+Set \fBQUIET\fP=\fI1\fP to silent output,
+\fBQUIET\fP takes precedence over \fIDEBUG\fP, \fIVERBOSE\fP and \fIWARNING\fP.
+.RE
+.sp
+\fBVERBOSE\fP
+.RS 4
+Set \fBVERBOSE\fP=\fI1\fP to show verbose messages (\fIdefault\fP: \fI0\fP).
+.RE
+.sp
+\fBWARNING\fP
+.RS 4
+Set \fBWARNING\fP=\fI1\fP to show warning messages (\fIdefault\fP: \fI0\fP).
+.RE
 .SH "OUTPUT"
 .sp
 For more information, see: \fIProgram Information\fP
+and to control output, see: \fIProgram Output\fP and \fIProgram Output\fP
 \&.
 .SH "EXAMPLES"
 .sp
@@ -129,6 +201,9 @@ bindev
 Copyright \(co 2021\-present j5pu.
 .br
 Free use of this software is granted under the terms of the MIT License.
+.SH "SEE ALSO"
+.sp
+genman(1), parse(1), parse\-man(1)
 .SH "AUTHOR"
 .sp
 j5pu
