@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: semver
+.\"    Author: j5pu
+.\" Generator: Asciidoctor 2.0.16
+.\"      Date: 2021-12-25
+.\"    Manual: Semver Manual
+.\"    Source: Semver 0.2.7
+.\"  Language: English
+.\"
+.TH "SEMVER" "7" "2021-12-25" "Semver 0.2.7" "Semver Manual"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+semver \- semantic version wrapper for svu to raise version if not version is raised with svu (patch)
+.SH "SYNOPSIS"
+.sp
+\fBsemver\fP [\fIINFO ARGUMENT\fP] [\fICOMMON OPTION\fP] [\fIOPTIONAL ARGUMENT\fP] \fIARGUMENT\fP...
+.SH "DESCRIPTION"
+.sp
+The \fBsemver\fP command
+.SH "OPTIONS"
+.SS "ARGUMENTS"
+.sp
+\fBARGUMENT\fP
+.RS 4
+Required \fIARGUMENT\fP.
+.RE
+.SS "OPTIONAL ARGUMENTS"
+.sp
+\fB\-\-optional\fP
+.RS 4
+\fIOPTIONAL\fP argument.
+.RE
+.SS "COMMON OPTIONS"
+.sp
+\fB\-\-debug\fP
+.RS 4
+Show debug output.
+.RE
+.sp
+\fB\-\-quiet\fP
+.RS 4
+Silent output.
+.RE
+.sp
+\fB\-\-warning\fP
+.RS 4
+Show warnings.
+.RE
+.sp
+\fB\-\-verbose\fP
+.RS 4
+Verbose output.
+.RE
+.SS "INFO ARGUMENTS"
+.sp
+\fB\-h, \-\-help\fP
+.RS 4
+Show man page and exit.
+.RE
+.sp
+\fB\-\-desc\fP
+.RS 4
+Show one line description and exit.
+.RE
+.sp
+\fB\-\-version\fP
+.RS 4
+Show version and exit.
+.RE
+.SH "EXIT STATUS"
+.sp
+\fB0\fP
+.RS 4
+Success.
+.RE
+.sp
+\fB1\fP
+.RS 4
+Error.
+.br
+.RE
+.SS "ENVIRONMENT"
+.sp
+\fBDEBUG\fP
+.RS 4
+Set \fBDEBUG\fP=\fI1\fP for debug output (\fIdefault\fP: \fIunset\fP).
+.RE
+.sp
+\fBQUIET\fP
+.RS 4
+Set \fBQUIET\fP=\fI1\fP to silent output (\fIdefault\fP: \fIerror\fP and \fIok\fP messages are shown).
+\fBQUIET\fP takes precedence over \fIDEBUG\fP, \fIVERBOSE\fP and \fIWARNING\fP.
+.RE
+.sp
+\fBVERBOSE\fP
+.RS 4
+Set \fBVERBOSE\fP=\fI1\fP to show verbose messages (\fIdefault\fP: \fIunset\fP).
+.RE
+.sp
+\fBWARNING\fP
+.RS 4
+Set \fBWARNING\fP=\fI1\fP to show warning messages (\fIdefault\fP: \fIunset\fP).
+.RE
+.SS "OUTPUT"
+.sp
+See \fICOMMON OPTIONS\fP and \fIENVIRONMENT\fP sections.
+.SH "EXAMPLES"
+.sp
+\fI$\fP \fBsemver\fP
+.sp
+\fI$\fP \fBsemver\fP
+output
+.SH "RESOURCES"
+.sp
+\fBGitHub:\fP \c
+.URL "https://github.com/j5pu/bindev" "" ""
+.SH "REPOSITORY"
+.sp
+bindev
+.SH "COPYING"
+.sp
+Copyright \(co 2021\-present j5pu.
+.br
+Free use of this software is granted under the terms of the MIT License.
+.SH "SEE ALSO"
+.sp
+manpage(1)
+.SH "AUTHOR"
+.sp
+j5pu
