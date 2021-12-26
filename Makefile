@@ -27,8 +27,8 @@ publish: build
 	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
-	@sleep 10; python3.9 -m pip install --quiet --upgrade $(basename)
-#
+	@sleep 20; python3.9 -m pip install --quiet --upgrade $(basename)
+
 install-local-wheel-force: build
 	@pip3.9 install --force-reinstall dist/*.whl
 
