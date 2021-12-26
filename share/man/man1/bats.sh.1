@@ -48,7 +48,7 @@ Required \fIARGUMENT\fP.
 .RS 4
 \fIOPTIONAL\fP argument.
 .RE
-.SS "COMMON OPTIONS"
+.SS "OPTIONS: OUTPUT"
 .sp
 \fB\-\-debug\fP
 .RS 4
@@ -69,7 +69,7 @@ Show warnings.
 .RS 4
 Verbose output.
 .RE
-.SS "INFO ARGUMENTS"
+.SS "ARGUMENTS: INFO"
 .sp
 \fB\-h, \-\-help\fP
 .RS 4
@@ -97,7 +97,8 @@ Success.
 Error.
 .br
 .RE
-.SS "ENVIRONMENT"
+.SH "ENVIRONMENT"
+.SS "ENVIRONMENT: OUTPUT"
 .sp
 \fBDEBUG\fP
 .RS 4
@@ -119,7 +120,7 @@ Set \fBVERBOSE\fP=\fI1\fP to show verbose messages (\fIdefault\fP: \fIunset\fP).
 .RS 4
 Set \fBWARNING\fP=\fI1\fP to show warning messages (\fIdefault\fP: \fIunset\fP).
 .RE
-.SS "OUTPUT"
+.SH "OUTPUT"
 .sp
 See \fICOMMON OPTIONS\fP and \fIENVIRONMENT\fP sections.
 .SH "EXAMPLES"
@@ -128,11 +129,11 @@ See \fICOMMON OPTIONS\fP and \fIENVIRONMENT\fP sections.
 .sp
 \fI$\fP \fBbats.sh\fP
 output
+.SH "RESOURCES"
+
 .SH "REPOSITORY"
 .sp
 bindev
-.SH "RESOURCES"
-.sp
 \fBGitHub:\fP \c
 .URL "https://github.com/j5pu/bindev" "" ""
 .SH "COPYING"
@@ -142,7 +143,7 @@ Copyright \(co 2021\-present j5pu.
 Free use of this software is granted under the terms of the MIT License.
 .SH "SEE ALSO"
 .sp
-manpage(1)
+genman(1), parse(1), parse\-man(1)
 .SH "AUTHOR"
 .sp
 j5pu
