@@ -132,7 +132,7 @@ bats::tests() {
 }
 
 #######################################
-# Add & updates bats libraries, sources libraries, set helper variables and run bats tests
+# add & updates bats libraries, sources libraries, set helper variables and run bats tests
 # Globals:
 #   arg
 #   clean

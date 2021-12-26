@@ -35,42 +35,42 @@ commit() {
   assert_output "${2}"
 }
 
-@test "new: current " {
+@test "semver: new current " {
   cd "$(repo '')"
   run semver
   assert_success
   assert_output ''
 }
 
-@test "new: next " {
+@test "semver: new next " {
   cd "$(repo '')"
   run semver next
   assert_success
   assert_output '0.1.0'
 }
 
-@test "new: patch " {
+@test "semver: new patch " {
   cd "$(repo '')"
   run semver patch
   assert_success
   assert_output '0.0.1'
 }
 
-@test "new: minor " {
+@test "semver: new minor " {
   cd "$(repo '')"
   run semver minor
   assert_success
   assert_output '0.1.0'
 }
 
-@test "new: major " {
+@test "semver: new major " {
   cd "$(repo '')"
   run semver major
   assert_success
   assert_output '1.0.0'
 }
 
-@test "next " {
+@test "semver: next " {
   cd "$(repo '')"
   run tag
   run svu --strip-prefix next

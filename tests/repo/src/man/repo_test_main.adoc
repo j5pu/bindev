@@ -1,19 +1,12 @@
 = doctitle(1)
-:doctype: manpage
-:man-linkstyle: pass:[blue R < >]
-:page-layout: base
-
-== NAME
-
-*{name}* - {desc}
 
 == SYNOPSIS
 
-*{name}* [_INFO ARGUMENT_] [_COMMON OPTION_] [_OPTIONAL ARGUMENT_] _ARGUMENT_...
+*{manname}* [_INFO ARGUMENT_] [_COMMON OPTION_] [_OPTIONAL ARGUMENT_] _ARGUMENT_...
 
 == DESCRIPTION
 
-The *{name}* command
+The *{manname}* command
 
 == OPTIONS
 
@@ -85,10 +78,10 @@ See _COMMON OPTIONS_ and _ENVIRONMENT_ sections.
 
 == EXAMPLES
 
-_$_ *{name}*
+_$_ *{manname}*
 
 --
-_$_ *{name}*
+_$_ *{manname}*
 output
 --
 
@@ -98,7 +91,7 @@ output
 
 == RESOURCES
 
-*GitHub:* https://github.com/{owner}/{repo}
+*GitHub:* https://github.com/{orgname}/{repo}
 
 == COPYING
 

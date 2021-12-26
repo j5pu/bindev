@@ -1,0 +1,26 @@
+[#_arguments-information]
+=== Program Information
+
+*--desc*::
+Show one line description from _NAME_ section of man page and exit.
+
+*--description*::
+Show _DESCRIPTION_ subsection from man page and exit.
+
+*--help*::
+Show man page and exit.
+
+*--manrepo*::
+Show _REPOSITORY_ name from man page and exit.
+
+*--name*::
+Show _NAME_ subsection from man page and exit.
+
+*--subsections*::
+Show subsection names from man page and exit.
+
+*--synopsis*::
+Show _SYNOPSIS_ subsection from man page and exit.
+
+*--version*::
+Show version from man page and exit.

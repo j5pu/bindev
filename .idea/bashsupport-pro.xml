@@ -22,5 +22,8 @@
         </targets>
       </library>
     </scriptLibraries>
+    <globalVariables>
+      <var name="section" />
+    </globalVariables>
   </component>
 </project>

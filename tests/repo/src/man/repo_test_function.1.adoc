@@ -1,0 +1,103 @@
+= doctitle(1)
+
+== SYNOPSIS
+
+*{manname}* [_INFO ARGUMENT_] [_COMMON OPTION_] [_OPTIONAL ARGUMENT_] _ARGUMENT_...
+
+== DESCRIPTION
+
+The *{manname}* command
+
+== OPTIONS
+
+// tag::options[]
+
+=== ARGUMENTS
+
+*ARGUMENT*::
+Required _ARGUMENT_.
+
+=== OPTIONAL ARGUMENTS
+
+*--optional*::
+_OPTIONAL_ argument.
+
+=== COMMON OPTIONS
+
+*--debug*::
+Show debug output.
+
+*--quiet*::
+Silent output.
+
+*--warning*::
+Show warnings.
+
+*--verbose*::
+Verbose output.
+
+=== INFO ARGUMENTS
+
+*-h, --help*::
+Show man page and exit.
+
+*--desc*::
+Show one line description and exit.
+
+*--version*::
+Show version and exit.
+
+// end::options[]
+
+== EXIT STATUS
+
+*0*::
+Success.
+
+*1*::
+Error. +
+
+=== ENVIRONMENT
+
+*DEBUG*::
+Set *DEBUG*=_1_ for debug output (_default_: _unset_).
+
+*QUIET*::
+Set *QUIET*=_1_ to silent output (_default_: _error_ and _ok_ messages are shown).
+*QUIET* takes precedence over _DEBUG_, _VERBOSE_ and _WARNING_.
+
+*VERBOSE*::
+Set *VERBOSE*=_1_ to show verbose messages (_default_: _unset_).
+
+*WARNING*::
+Set *WARNING*=_1_ to show warning messages (_default_: _unset_).
+
+=== OUTPUT
+
+See _COMMON OPTIONS_ and _ENVIRONMENT_ sections.
+
+== EXAMPLES
+
+_$_ *{manname}*
+
+--
+_$_ *{manname}*
+output
+--
+
+== REPOSITORY
+
+{repo}
+
+== RESOURCES
+
+*GitHub:* https://github.com/{orgname}/{repo}
+
+== COPYING
+
+Copyright (C) 2021-present {author}. +
+Free use of this software is granted under the terms of the MIT License.
+
+== SEE ALSO
+
+manpage(1), repo_test.sh(7)

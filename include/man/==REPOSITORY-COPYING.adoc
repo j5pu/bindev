@@ -1,0 +1,10 @@
+== REPOSITORY
+
+{repo} +
+
+*GitHub:* https://github.com/{orgname}/{repo}
+
+== COPYING
+
+Copyright (C) 2021-present {author}. +
+Free use of this software is granted under the terms of the MIT License.

@@ -1,0 +1,23 @@
+[#_options_output]
+=== Program Output
+
+*--debug*::
+Show debug output.
+
+*--dry-run*::
+Show verbose output and do not execute the command.
+
+*--no-quiet*::
+Do not silent output for commands with default quiet mode, i.e.: git-top, etc.
+
+*--quiet*::
+Silent output.
+
+*--warning*::
+Show warnings.
+
+*--white*::
+Show captured output with no color.
+
+*--verbose*::
+Verbose output.
