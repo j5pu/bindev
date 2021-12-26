@@ -1,4 +1,5 @@
 #!/bin/bash
+# bashsupport disable=BP2001
 
 # add & updates bats libraries, sources libraries, set helper variables and run bats tests.
 #
