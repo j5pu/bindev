@@ -123,9 +123,7 @@ main(){
   script="${0##*/}"
   version=$(semver next || { echo "$0: $(pwd): Invalid next semver" >&2; exit 1; })
 
-  # FIXME: temporal
   tmp="$(mktemp -d)"
-  tmp="./tmp"; rm -rf "${tmp}"; mkdir "${tmp}"
 
   find=( . ); [ ! -d ./src/man ] || find+=( ./src/man )
   while read -r file; do
