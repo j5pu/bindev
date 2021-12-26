@@ -1,8 +1,9 @@
-= doctitle(1)
-
+:Output:
 == SYNOPSIS
 
-*{manname}* [_INFO ARGUMENT_] [_COMMON OPTION_] [_OPTIONAL ARGUMENT_] _ARGUMENT_...
+[verse]
+*{manname}* [_OPTION_]... [_OPTION PROGRAM OUTPUT_]... _ARGUMENT_...
+include::/usr/local/include/man/SYNOPSIS-OPTIONS_Information.adoc[]
 
 == DESCRIPTION
 
@@ -12,42 +13,25 @@ The *{manname}* command
 
 // tag::options[]
 
-=== ARGUMENTS
+*--option*::
+_OPTION_ one option.
 
-*ARGUMENT*::
-Required _ARGUMENT_.
-
-=== OPTIONAL ARGUMENTS
-
-*--optional*::
-_OPTIONAL_ argument.
-
-=== COMMON OPTIONS
-
-*--debug*::
-Show debug output.
-
-*--quiet*::
-Silent output.
-
-*--warning*::
-Show warnings.
-
-*--verbose*::
-Verbose output.
-
-=== INFO ARGUMENTS
-
-*-h, --help*::
-Show man page and exit.
-
-*--desc*::
-Show one line description and exit.
-
-*--version*::
-Show version and exit.
+ifdef::Output[]
+include::/usr/local/include/man/OPTIONS-Output.adoc[]
+endif::[]
 
 // end::options[]
+
+== ARGUMENTS
+
+// tag::arguments[]
+
+*ARGUMENT*::
+Required one _ARGUMENT_.
+
+include::/usr/local/include/man/ARGUMENTS-Information.adoc[]
+
+// end::arguments[]
 
 == EXIT STATUS
 
@@ -57,47 +41,28 @@ Success.
 *1*::
 Error. +
 
-=== ENVIRONMENT
+== ENVIRONMENT
 
-*DEBUG*::
-Set *DEBUG*=_1_ for debug output (_default_: _unset_).
+ifdef::Output[]
+include::/usr/local/include/man/ENVIRONMENT-Output.adoc[]
+endif::[]
 
-*QUIET*::
-Set *QUIET*=_1_ to silent output (_default_: _error_ and _ok_ messages are shown).
-*QUIET* takes precedence over _DEBUG_, _VERBOSE_ and _WARNING_.
+== OUTPUT
 
-*VERBOSE*::
-Set *VERBOSE*=_1_ to show verbose messages (_default_: _unset_).
-
-*WARNING*::
-Set *WARNING*=_1_ to show warning messages (_default_: _unset_).
-
-=== OUTPUT
-
-See _COMMON OPTIONS_ and _ENVIRONMENT_ sections.
+For more information, see: _<<_arguments-information>>_
+ifdef::Output[]
+and to control output, see: _<<_options_output>>_ and _<<_environment_output>>_
+endif::[]
+.
 
 == EXAMPLES
 
-_$_ *{manname}*
-
---
+[verse]
 _$_ *{manname}*
 output
---
 
-== REPOSITORY
-
-{repo}
-
-== RESOURCES
-
-*GitHub:* https://github.com/{orgname}/{repo}
-
-== COPYING
-
-Copyright (C) 2021-present {author}. +
-Free use of this software is granted under the terms of the MIT License.
+include::/usr/local/include/man/REPOSITORY-COPYING.adoc[]
 
 == SEE ALSO
 
-manpage(1), repo_test.sh(7)
+genman(1), parse(1), parse-man(1)
