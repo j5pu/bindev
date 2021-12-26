@@ -5,9 +5,6 @@
 set -euo pipefail
 shopt -s inherit_errexit
 
-# TODO: meter la url, los common arguments, etc en fichero en share !
-#   si pero los templates tienen que estar en el otro. ... da igual. no da igual.!!!!!
-
 #######################################
 # extract description for header in file
 # Globals:
