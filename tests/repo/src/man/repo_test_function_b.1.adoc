@@ -1,0 +1,68 @@
+:Output:
+== SYNOPSIS
+
+[verse]
+*{manname}* [_OPTION_]... [_OPTION PROGRAM OUTPUT_]... _ARGUMENT_...
+include::/usr/local/include/man/SYNOPSIS-OPTIONS_Information.adoc[]
+
+== DESCRIPTION
+
+The *{manname}* command
+
+== OPTIONS
+
+// tag::options[]
+
+*--option*::
+_OPTION_ one option.
+
+ifdef::Output[]
+include::/usr/local/include/man/OPTIONS-Output.adoc[]
+endif::[]
+
+// end::options[]
+
+== ARGUMENTS
+
+// tag::arguments[]
+
+*ARGUMENT*::
+Required one _ARGUMENT_.
+
+include::/usr/local/include/man/ARGUMENTS-Information.adoc[]
+
+// end::arguments[]
+
+== EXIT STATUS
+
+*0*::
+Success.
+
+*1*::
+Error. +
+
+== ENVIRONMENT
+
+ifdef::Output[]
+include::/usr/local/include/man/ENVIRONMENT-Output.adoc[]
+endif::[]
+
+== OUTPUT
+
+For more information, see: _<<_arguments-information>>_
+ifdef::Output[]
+and to control output, see: _<<_options_output>>_ and _<<_environment_output>>_
+endif::[]
+.
+
+== EXAMPLES
+
+[verse]
+_$_ *{manname}*
+output
+
+include::/usr/local/include/man/REPOSITORY-COPYING.adoc[]
+
+== SEE ALSO
+
+genman(1), parse(1), parse-man(1)

@@ -3,7 +3,9 @@
 #
 # repo_test_main is a test script in sh with main() function
 
-
+#######################################
+#  this is the description of main function
+#######################################
 main() {
   :
 }

@@ -6,6 +6,21 @@ set -euo pipefail
 shopt -s inherit_errexit
 
 #######################################
+# shows invalid function comment block error message
+# Globals:
+#   block
+# Arguments:
+#   1
+#######################################
+invalid() {
+  if ! grep -q "^${line_comment}"; then
+    echo Invalid Function Comment Block for file: "${src_file}" and function: "$1" >&2
+    echo -e "\n@ BLOCK START @\n$(tail -r <<< "${block}")\n@ BLOCK END @\n">&2
+    exit 1
+  fi
+
+}
+#######################################
 # extract description for header in file
 # Globals:
 #   src_file      Command source code.
@@ -23,10 +38,12 @@ manpurpose-file(){
 #   1             Function name.
 #######################################
 manpurpose-func() {
-  local line_comment="#######################################"
-  if grep -qE "^${1}\(\) {" "${src_file}"; then
-    tail -r "${src_file}"| awk "/^${1}\() {/{f=1; c=0} f; /${line_comment}/ && ++c==2{f=0}" | \
-    grep -v "${line_comment}" | sed 's/^# //' | tail -1 | sed 's/\.$//'
+  line_comment="#######################################"
+  if grep -qE "^${1}\(\) " "${src_file}"; then
+    block="$(tail -r "${src_file}" | awk "/^${1}\() /{f=1; c=0} f; /^${line_comment}/ && ++c==2{f=0}")"
+    sed -n 2p <<< "${block}" | invalid "$1"
+    tail -1 <<< "${block}" | invalid "$1"
+    tail -r <<< "${block}" | sed -n 2p | sed 's/^#//; s/\.$//' | xargs
   fi
 }
 
