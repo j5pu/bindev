@@ -107,7 +107,7 @@ main(){
   for arg do
     shift
     case "${arg}" in
-      --desc|--help|--manrepo|--version) COMMAND="${0##*/}" parse-man "${arg}"; exit ;;
+      --desc|--help|--manrepo|--version) COMMAND="$0" parse-man "${arg}"; exit ;;
       *) cd "${arg}" || { "$0: ${path}: No such directory"; exit 1; };;
     esac
   done

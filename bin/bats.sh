@@ -159,7 +159,7 @@ bats::main() {
         --force) bats::libs "${arg}" ;;
         --tests*) bats::tests "${arg}" ;;
         --verbose*) verbose=true; bats::tests "${arg}" ;;
-        --desc|--help|--manrepo|--version) COMMAND="${0##*/}" parse-man "${arg}";;
+        --desc|--help|--manrepo|--version) COMMAND="$0" parse-man "${arg}";;
       esac
       exit
     done
