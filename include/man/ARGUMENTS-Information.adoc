@@ -4,11 +4,23 @@
 *--desc*::
 Show one line description from _NAME_ section of man page and exit.
 
+*--description*::
+Show _DESCRIPTION_ subsection of man page and exit.
+
+*--examples*::
+Show _EXAMPLES_ subsection of man page and exit.
+
 *--help*::
-Show man page and exit.
+Show _man page_ and exit.
 
 *--manrepo*::
 Show _REPOSITORY_ name from man page and exit.
 
+*--subsections*::
+Show _subsections_ of man page and exit.
+
+*--synopsis*::
+Show _SYNOPSIS_ subsection of man page and exit.
+
 *--version*::
-Show version from man page and exit.
+Show _version_ from man page and exit.

@@ -1,0 +1,1 @@
+*{manname}* --desc|--description|--examples|--help|--manrepo|--subsections|--synopsis|--version

@@ -23,7 +23,7 @@ main() {
     shift
     case "${arg}" in
       current|major|minor|next|patch) cmd="${arg}" ;;
-      --desc|--help|--manrepo|--version) COMMAND="$0" parse-man "${arg}"; exit ;;
+      --*) fromman "$0" "$@" || exit 0 ;;
       *) path="${arg}" ;;
     esac
   done
