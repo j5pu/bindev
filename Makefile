@@ -24,6 +24,7 @@ build: tests
 publish: build
 	@echo $(next)
 	@git tag $(next)
+	@git push --quiet
 	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
