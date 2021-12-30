@@ -1,0 +1,106 @@
+== SYNOPSIS
+
+// tag::synopsys-information[]
+*{manname}* --desc|--description|--examples|--help|--manrepo|--subsections|--synopsis|--version
+// end::synopsys-information[]
+
+== OPTIONS
+
+// tag::options-output[]
+[#_options-output]
+=== Program Output
+
+*--debug*::
+Show debug output.
+
+*--dry-run*::
+Show verbose output and do not execute the command.
+
+*--no-quiet*::
+Do not silent output for commands with default quiet mode, i.e.: git-top, etc.
+
+*--quiet*::
+Silent output.
+
+*--warning*::
+Show warnings.
+
+*--white*::
+Show captured output with no color.
+
+*--verbose*::
+Verbose output.
+// end::options-output[]
+
+== ARGUMENTS
+
+// tag::arguments-information[]
+[#_arguments-information]
+=== Program Information
+
+*--desc*::
+Show one line description from _NAME_ section of man page and exit.
+
+*--description*::
+Show _DESCRIPTION_ subsection of man page and exit.
+
+*--examples*::
+Show _EXAMPLES_ subsection of man page and exit.
+
+*--help*::
+Show _man page_ and exit.
+
+*--manrepo*::
+Show _REPOSITORY_ name from man page and exit.
+
+*--subsections*::
+Show _subsections_ of man page and exit.
+
+*--synopsis*::
+Show _SYNOPSIS_ subsection of man page and exit.
+
+*--version*::
+Show _version_ from man page and exit.
+// end::arguments-information[]
+
+== ENVIRONMENT
+
+// tag::environment-output[]
+[#_environment-output]
+=== Program Output
+
+You can control output information using the options listed under _<<_options-output>>_,
+or using the following environment variables: +
+
+*DEBUG*::
+Set *DEBUG*=_1_ for debug output (_default_: _0_).
+
+*DRY_RUN*::
+Set *DRY_RUN*=_1_ for verbose output and do not execute the command (_default_: _0_).
+
+*NO_QUIET*::
+Set *NO_QUIET*=_1_ to not silent output for commands with default quiet mode, i.e.: git-top, etc. (_default_: _0_).
+
+*QUIET*::
+Set *QUIET*=_1_ to silent output,
+*QUIET* takes precedence over _DEBUG_, _VERBOSE_ and _WARNING_.
+
+*VERBOSE*::
+Set *VERBOSE*=_1_ to show verbose messages (_default_: _0_).
+
+*WARNING*::
+Set *WARNING*=_1_ to show warning messages (_default_: _0_).
+// end::environment-output[]
+
+// tag::repository-and-copying[]
+== REPOSITORY
+
+{repo} +
+
+*GitHub:* https://github.com/{orgname}/{repo}
+
+== COPYING
+
+Copyright (C) 2021-present {author}. +
+Free use of this software is granted under the terms of the MIT License.
+// end::repository-and-copying[]
