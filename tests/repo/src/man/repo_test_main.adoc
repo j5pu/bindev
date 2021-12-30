@@ -1,8 +1,11 @@
+:Output:
+:includedir: /usr/local/include/man
 == SYNOPSIS
 
 [verse]
 *{manname}* [_OPTION_]... [_OPTION PROGRAM OUTPUT_]... _ARGUMENT_...
-include::/usr/local/include/man/SYNOPSIS-OPTIONS_Information.adoc[]
+
+include::{includedir}/template.adoc[tag=synopsys-information]
 
 == DESCRIPTION
 
@@ -10,27 +13,19 @@ The *{manname}* command
 
 == OPTIONS
 
-// tag::options[]
-
 *--option*::
 _OPTION_ one option.
 
 ifdef::Output[]
-include::/usr/local/include/man/OPTIONS-Output.adoc[]
+include::{includedir}/template.adoc[tag=options-output]
 endif::[]
 
-// end::options[]
-
 == ARGUMENTS
-
-// tag::arguments[]
 
 *ARGUMENT*::
 Required one _ARGUMENT_.
 
-include::/usr/local/include/man/ARGUMENTS-Information.adoc[]
-
-// end::arguments[]
+include::{includedir}/template.adoc[tag=arguments-information]
 
 == EXIT STATUS
 
@@ -43,15 +38,19 @@ Error. +
 == ENVIRONMENT
 
 ifdef::Output[]
-include::/usr/local/include/man/ENVIRONMENT-Output.adoc[]
+include::{includedir}/template.adoc[tag=environment-output]
 endif::[]
 
 == OUTPUT
 
 For more information, see: _<<_arguments-information>>_
+
 ifdef::Output[]
-and to control output, see: _<<_options_output>>_ and _<<_environment_output>>_
+
+and to control output, see: _<<_options-output>>_ and _<<_environment-output>>_
+
 endif::[]
+
 .
 
 == EXAMPLES
@@ -60,8 +59,8 @@ endif::[]
 _$_ *{manname}*
 output
 
-include::/usr/local/include/man/REPOSITORY-COPYING.adoc[]
+include::{includedir}/template.adoc[tag=repository-and-copying]
 
 == SEE ALSO
 
-genman(1), parse(1), parse-man(1)
+genman(1), fromman(1), parse(1)

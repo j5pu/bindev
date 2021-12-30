@@ -1,4 +1,4 @@
-# shellcheck shell=sh disable=SC3045
+#!/bin/sh
 
 #
 # repo_test.sh is a test library with one function repo_test_function
