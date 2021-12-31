@@ -2,12 +2,12 @@
 .\"     Title: bats.sh
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.16
-.\"      Date: 2021-12-30
+.\"      Date: 2021-12-31
 .\"    Manual: Bats.sh Manual
-.\"    Source: Bats.sh 0.4.1
+.\"    Source: Bats.sh 0.4.2
 .\"  Language: English
 .\"
-.TH "BATS.SH" "7" "2021-12-30" "Bats.sh 0.4.1" "Bats.sh Manual"
+.TH "BATS.SH" "7" "2021-12-31" "Bats.sh 0.4.2" "Bats.sh Manual"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -49,7 +49,18 @@ The \fBbats.sh\fP library (when \fIsourced\fP):
 .  sp -1
 .  IP \(bu 2.3
 .\}
-install \fIbats libraries\fP (bats\-assert bats\-core bats\-file bats\-support) and \fIbats\-core\fP,
+install \fIbats libraries\fP (bats\-assert, bats\-file and bats\-support) and \fIbats\-core\fP,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+sources \fI.envrc\fP,
 .RE
 .sp
 .RS 4
@@ -71,18 +82,7 @@ set \fIhelper variables\fP,
 .  sp -1
 .  IP \(bu 2.3
 .\}
-define \fIhelper functions\fP,
-.RE
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.  sp -1
-.  IP \(bu 2.3
-.\}
-and generates \fIdocumentation\fP.
+define \fIhelper functions\fP.
 .RE
 .sp
 The \fBbats.sh\fP command:
@@ -106,7 +106,18 @@ updates \fIbats libraries\fP (bats\-assert bats\-core bats\-file bats\-support) 
 .  sp -1
 .  IP \(bu 2.3
 .\}
-and run bats \fItests\fP,
+generates \fIdocumentation\fP.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+and run bats \fItests\fP.
 .RE
 .SH "OPTIONS"
 .sp
