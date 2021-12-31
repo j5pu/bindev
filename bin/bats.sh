@@ -60,7 +60,7 @@ TESTS_LOCAL="${TESTS_LOCAL:-1}"; export TESTS_LOCAL
 BATS_LOCAL=false; [ "${TESTS_LOCAL}" -eq 0 ] || BATS_LOCAL=true; export BATS_LOCAL
 
 # shellcheck source=./../.envrc
-[ ! -f "${BATS_TOP}/.envrc" ] || . "${BATS_TOP}/.envrc"
+[ ! -f "${BATS_TOP-}/.envrc" ] || . "${BATS_TOP}/.envrc"
 
 #######################################
 # Colorized test description with image name and command

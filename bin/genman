@@ -119,7 +119,7 @@ tests_line() {
 #######################################
 main(){
   local arg author corner dest dir dirs doctitle file filename find manmanual manpurpose mansource manvolnum
-  local orgname path='.' repo script src version
+  local orgname output path='.' repo script src version
 
   for arg do
     shift
@@ -176,7 +176,6 @@ main(){
 
     manmanual="${manname^} Manual"
     mansource="${manname^} ${version}"
-
     doctitle="${manname^^}(${manvolnum})"
     asciidoctor -b manpage \
       -a doctype=manpage \
@@ -203,7 +202,7 @@ main(){
   done < <(find "${find[@]}" -type f \( -name "*.adoc" -o -name "README.adoc" \) -mindepth 1 -maxdepth 1 | grep -v '=')
 
   if [ -d "${dest}" ]; then
-    if ! git diff --no-index --no-patch "${dest}" "${tmp}"; then
+    if ! git diff --no-index --no-patch "${dest}" "${tmp}" >/dev/null; then
       rm -rf "${dest:?}"/*
       cp -r "${tmp}"/* "${dest}"
       git add "${dest}" && git commit --quiet -m "${script}" "${dest}" >/dev/null 2>&1
