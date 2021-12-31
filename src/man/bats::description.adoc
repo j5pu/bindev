@@ -9,17 +9,7 @@ include::{includedir}/template.adoc[tag=synopsys-information]
 
 == DESCRIPTION
 
-The *{manname}* library (when _sourced_):
-
-* install _bats libraries_ (bats-assert bats-core bats-file bats-support) and _bats-core_,
-* set _helper variables_,
-* define _helper functions_,
-* and generates _documentation_.
-
-The *{manname}* command:
-
-* updates _bats libraries_ (bats-assert bats-core bats-file bats-support) and _bats-core_,
-* and run bats _tests_,
+The *{manname}* command
 
 == OPTIONS
 
@@ -62,10 +52,6 @@ and to control output, see: _<<_options-output>>_ and _<<_environment-output>>_
 endif::[]
 
 .
-== THE bats::description HELPER
-
-Colorized test description with image name and command.
-
 
 == EXAMPLES
 
@@ -77,4 +63,4 @@ include::{includedir}/template.adoc[tag=repository-and-copying]
 
 == SEE ALSO
 
-bats\::description(1), genman(1)
+genman(1), fromman(1), parse(1)

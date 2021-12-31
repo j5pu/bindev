@@ -32,6 +32,11 @@ BATS_TOP="$(git top)"; export BATS_TOP
 # </html>
 BATS_TOP_BASENAME="${BATS_TOP##*/}"; export BATS_TOP_BASENAME
 
+# <html><h2>Git Top Semver Next</h2>
+# <p><strong><code>$BATS_SEMVER_NEXT</code></strong> contains the output of 'semver next'.</p>
+# </html>
+BATS_SEMVER_NEXT="$(semver next)"; export BATS_SEMVER_NEXT
+
 # <html><h2>Git Top Tests Path</h2>
 # <p><strong><code>$BATS_TOP_TESTS</code></strong> contains the git top directory with 'tests' basename added.</p>
 # </html>
@@ -56,7 +61,7 @@ BATS_LOCAL=false; [ "${TESTS_LOCAL}" -eq 0 ] || BATS_LOCAL=true; export BATS_LOC
 
 
 #######################################
-# Colorized test description with image and command
+# Colorized test description with image name and command
 # Globals:
 #   BATS_TEST_DESCRIPTION
 # Arguments:
@@ -85,9 +90,10 @@ bats::libs() {
       git clone --quiet https://github.com/bats-core/"${i}".git "${d}"
     elif [ "${1}" = '--force' ]; then
      git -C "${d}" pull --quiet --force
-   fi
+    fi
     [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
   done
+  genman "${BATS_TOP}"
   command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
 }
 
