@@ -59,6 +59,8 @@ TESTS_LOCAL="${TESTS_LOCAL:-1}"; export TESTS_LOCAL
 # </html>
 BATS_LOCAL=false; [ "${TESTS_LOCAL}" -eq 0 ] || BATS_LOCAL=true; export BATS_LOCAL
 
+# shellcheck source=./../.envrc
+[ ! -f "${BATS_TOP}/.envrc" ] || . "${BATS_TOP}/.envrc"
 
 #######################################
 # Colorized test description with image name and command
@@ -93,7 +95,6 @@ bats::libs() {
     fi
     [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
   done
-  genman "${BATS_TOP}"
   command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
 }
 
@@ -125,9 +126,9 @@ bats::tests() {
   tmp='/tmp/bats'
   output="${tests_root}/output"; [ ! -d "${output}" ] || { mkdir -p "${tmp}"; rm -rf "${tmp}";mv "${output}" "${tmp}"; }
   if ! $clean; then
+    genman "${BATS_TOP}"
     args=("${tests_root}" --print-output-on-failure --recursive )
 
-    [ ! -f "${BATS_TOP}/.envrc" ] || . "${BATS_TOP}/.envrc"
     [ ! "${TESTS_JOBS-}" ] || args+=(--jobs "${TESTS_JOBS}")
 
     ! $verbose || args+=(--gather-test-outputs-in "${output}" --no-tempdir-cleanup --output "${output}" \

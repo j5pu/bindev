@@ -11,15 +11,16 @@ include::{includedir}/template.adoc[tag=synopsys-information]
 
 The *{manname}* library (when _sourced_):
 
-* install _bats libraries_ (bats-assert bats-core bats-file bats-support) and _bats-core_,
+* install _bats libraries_ (bats-assert, bats-file and bats-support) and _bats-core_,
+* sources _.envrc_,
 * set _helper variables_,
-* define _helper functions_,
-* and generates _documentation_.
+* define _helper functions_.
 
 The *{manname}* command:
 
 * updates _bats libraries_ (bats-assert bats-core bats-file bats-support) and _bats-core_,
-* and run bats _tests_,
+* generates _documentation_.
+* and run bats _tests_.
 
 == OPTIONS
 
