@@ -43,7 +43,7 @@ manpurpose-func() {
     block="$(tail -r "${src_file}" | awk "/^${1}\() /{f=1; c=0} f; /^${line_comment}/ && ++c==2{f=0}")"
     sed -n 2p <<< "${block}" | invalid "$1"
     tail -1 <<< "${block}" | invalid "$1"
-    tail -r <<< "${block}" | sed -n 2p | sed 's/^#//; s/\.$//' | xargs
+    tail -r <<< "${block}" | sed -n 2p | sed 's/^#//; s/\.$//' | awk '{$1=$1};1'
   fi
 }
 
