@@ -4,10 +4,10 @@
 .\" Generator: Asciidoctor 2.0.16
 .\"      Date: 2021-12-30
 .\"    Manual: Bats.sh Manual
-.\"    Source: Bats.sh 0.4.0
+.\"    Source: Bats.sh 0.4.1
 .\"  Language: English
 .\"
-.TH "BATS.SH" "7" "2021-12-30" "Bats.sh 0.4.0" "Bats.sh Manual"
+.TH "BATS.SH" "7" "2021-12-30" "Bats.sh 0.4.1" "Bats.sh Manual"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -39,7 +39,75 @@ bats.sh \- bashsupport disable=BP2001
 \fBbats.sh\fP \-\-desc|\-\-description|\-\-examples|\-\-help|\-\-manrepo|\-\-subsections|\-\-synopsis|\-\-version
 .SH "DESCRIPTION"
 .sp
-The \fBbats.sh\fP command
+The \fBbats.sh\fP library (when \fIsourced\fP):
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+install \fIbats libraries\fP (bats\-assert bats\-core bats\-file bats\-support) and \fIbats\-core\fP,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+set \fIhelper variables\fP,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+define \fIhelper functions\fP,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+and generates \fIdocumentation\fP.
+.RE
+.sp
+The \fBbats.sh\fP command:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+updates \fIbats libraries\fP (bats\-assert bats\-core bats\-file bats\-support) and \fIbats\-core\fP,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+and run bats \fItests\fP,
+.RE
 .SH "OPTIONS"
 .sp
 \fB\-\-option\fP
@@ -185,6 +253,9 @@ For more information, see: \fIProgram Information\fP
 and to control output, see: \fIProgram Output\fP and \fIProgram Output\fP
 .sp
 \&.
+== THE bats::description HELPER
+.sp
+Colorized test description with image name and command.
 .SH "EXAMPLES"
 .sp
 .nf
@@ -204,6 +275,9 @@ bindev
 Copyright \(co 2021\-present j5pu.
 .br
 Free use of this software is granted under the terms of the MIT License.
+.SH "SEE ALSO"
+.sp
+bats\(rs::description(1), genman(1)
 .SH "AUTHOR"
 .sp
 j5pu
