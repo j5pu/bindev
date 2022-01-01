@@ -27,7 +27,7 @@ publish: build
 	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
-	@PYTHONWARNINGS="ignore" python3.9 -m pip install --force-reinstall $(tmp_publish)/*.whl
+	@PYTHONWARNINGS="ignore" python3.9 -m pip install --force-reinstall --quiet $(tmp_publish)/*.whl
 
 verbose: clean
 	@bin/bats.sh --verbose
