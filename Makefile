@@ -29,7 +29,8 @@ publish: build
 	@twine upload $(tmp_publish)/*
 	@sleep 1
 	@echo $(next)
-	@python3 -m pip install --no-cache-dir --force-reinstall --quiet --upgrade $(basename)==$(next)
+#	@python3 -m pip install --no-cache-dir --force-reinstall --quiet --upgrade $(basename)==$(next)
+	@python3 -m pip install --no-cache-dir --quiet $(basename)==$(next)
 	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
 install-local-wheel-force: build
