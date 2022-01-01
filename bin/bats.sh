@@ -71,6 +71,7 @@ BATS_LOCAL=false; [ "${TESTS_LOCAL}" -eq 0 ] || BATS_LOCAL=true; export BATS_LOC
 #   2:   command executed.
 #######################################
 bats::description() {
+  set -x
   . color.sh
   echo "   [$(magenta "$(echo "${BATS_TEST_DESCRIPTION}" | awk '{ $1=$1 };1')")] [$(green "${1:-macOS}")] \
 ${2:+[$(blue "${2}")]}" >&3
