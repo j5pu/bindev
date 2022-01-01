@@ -28,6 +28,7 @@ publish: build
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
 	@PYTHONWARNINGS="ignore" python3.9 -m pip install --force-reinstall --quiet $(tmp_publish)/*.whl
+	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
 verbose: clean
 	@bin/bats.sh --verbose
