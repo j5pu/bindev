@@ -28,8 +28,8 @@ publish: build
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
 	@sleep 1
-	@python3 -m pip install --force-reinstall --quiet --upgrade $(basename)==$(next)
 	@echo $(next)
+	@python3 -m pip install --no-cache-dir --force-reinstall --quiet --upgrade $(basename)==$(next)
 	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
 install-local-wheel-force: build
