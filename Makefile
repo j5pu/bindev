@@ -22,14 +22,15 @@ build: tests
 	@python3.9 -m build -o $(tmp_build) $(DIR)
 
 publish: build
-	@echo $(next)
 	@git tag $(next)
 	@git push --quiet
 	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
-	@sleep 30; python3.9 -m pip install --quiet --upgrade $(basename)
-	@python3.9 -m pip install --force-reinstall --quiet --upgrade $(basename) &>/dev/null
+	@sleep 1
+	@python3 -m pip install --force-reinstall --quiet --upgrade $(basename)==$(next)
+	@echo $(next)
+	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
 install-local-wheel-force: build
 	@pip3.9 install --force-reinstall dist/*.whl
