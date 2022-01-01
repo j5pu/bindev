@@ -28,6 +28,7 @@ publish: build
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
 	@sleep 1
+	@rm -rf ~/Library/Caches/pip/http
 	@curl -sL -o /dev/null --head --fail -H 'Cache-Control: no-cache' https://pypi.org/simple/bindev/?$(date +%s)
 	@PYTHONWARNINGS="ignore" python3 -m pip install -vvv --no-cache-dir --force-reinstall --upgrade --quiet $(basename)
 	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
