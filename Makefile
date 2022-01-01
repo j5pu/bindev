@@ -34,7 +34,7 @@ install: build
 verbose: clean
 	@bin/bats.sh --verbose
 
-install:
+install-fix:
 	@sleep 1
 	@python3 -m pip download --quiet $(basename)==$(next) --no-binary :all: || true
 	@python3 -m pip download --quiet $(basename)==$(next) --no-binary :all: || true
