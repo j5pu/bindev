@@ -28,7 +28,7 @@ publish: build
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
 	@sleep 1
-	@curl -sL -o /dev/null --head --fail https://pypi.org/manage/project/bindev/release/$(next)
+	@curl -sL -o /dev/null --head --fail https://pypi.org/simple/bindev/
 	@PYTHONWARNINGS="ignore" python3 -m pip install -vvv --no-cache-dir --force-reinstall --upgrade --quiet $(basename)
 	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
