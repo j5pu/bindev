@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#
+# update jetbrains license
+
 for product in IntelliJIdea WebStorm DataGrip PhpStorm CLion PyCharm GoLand RubyMine Rider; do
   echo "Closing ${product}"
   pkill -9 -fi "${product}"

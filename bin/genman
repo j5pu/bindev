@@ -20,6 +20,7 @@ invalid() {
   fi
 
 }
+
 #######################################
 # extract description for header in file
 # Globals:
@@ -163,7 +164,7 @@ main(){
     else
       while read -r src_file; do
         manpurpose="$(manpurpose-func "${manname}")"
-        [ "${manpurpose-}" ] || break
+        [ ! "${manpurpose-}" ] || break
       done < <(find "${dirs[@]}" -type f -name "*.sh")
     fi
     [ "${manpurpose-}" ] || { echo Invalid Desc for: "${manname}"; exit 1; }
