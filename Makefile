@@ -29,7 +29,7 @@ publish: build
 	@twine upload $(tmp_publish)/*
 	@sleep 1
 #	@PYTHONWARNINGS="ignore" python3 -m pip install --no-cache-dir --force-reinstall --quiet $(basename)
-	@PYTHONWARNINGS="ignore" python3 -m pip install --no-cache-dir --upgrade --quiet $(basename)
+	@PYTHONWARNINGS="ignore" python3 -m pip install --no-cache-dir --upgrade --quiet $(basename)==$(next)
 #	@PYTHONWARNINGS="ignore" python3 -m pip install --no-cache-dir --quiet $(basename)==$(next)
 	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
