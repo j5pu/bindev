@@ -29,6 +29,7 @@ publish: build
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
 	@sleep 30; python3.9 -m pip install --quiet --upgrade $(basename)
+	@python3.9 -m pip install --force-reinstall --quiet --upgrade $(basename) &>/dev/null
 
 install-local-wheel-force: build
 	@pip3.9 install --force-reinstall dist/*.whl
