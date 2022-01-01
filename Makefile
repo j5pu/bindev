@@ -27,7 +27,8 @@ publish: build
 	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
-	@PYTHONWARNINGS="ignore::DeprecationWarning" python3 -m pip install --no-cache-dir --quiet $(basename)==$(next)
+	@sleep 1
+	@PYTHONWARNINGS="ignore" python3 -m pip install --no-cache-dir --quiet $(basename)==$(next)
 	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
 install-local-wheel-force: build
