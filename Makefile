@@ -1,4 +1,4 @@
-.PHONY: clean tests build publish
+.PHONY: clean tests build publish install
 
 SHELL := $(shell command -v bash)
 DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
@@ -27,19 +27,24 @@ publish: build
 	@git push --quiet --tags
 	@python3.9 -m build -o $(tmp_publish) $(DIR)
 	@twine upload $(tmp_publish)/*
-	@sleep 1
-	@python3 -m pip download --quiet $(basename)==$(next) --no-binary :all:
-	@python3 -m pip install --quiet $(basename)-$(next).tar.gz
-	@#curl -sL -o /dev/null --head --fail -H 'Cache-Control: no-cache' https://pypi.org/simple/bindev/?$(date +%s)
-	@#PYTHONWARNINGS="ignore" python3 -m pip install -vvv --no-cache-dir --force-reinstall --upgrade --quiet $(basename)
-	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
 
-install-local-wheel-force: build
-	@pip3.9 install --force-reinstall dist/*.whl
-
-install-local-wheel: build
-	@pip3.9 install dist/*.whl
+install: build
+	@PYTHONWARNINGS="ignore" python3.9 -m pip install --force-reinstall $(tmp_publish)/*.whl
 
 verbose: clean
 	@bin/bats.sh --verbose
 
+install:
+	@sleep 1
+	@python3 -m pip download --quiet $(basename)==$(next) --no-binary :all: || true
+	@python3 -m pip download --quiet $(basename)==$(next) --no-binary :all: || true
+	@python3 -m pip install --quiet $(basename)-$(next).tar.gz
+	@#curl -sL -o /dev/null --head --fail -H 'Cache-Control: no-cache' https://pypi.org/simple/bindev/?$(date +%s)
+	@#PYTHONWARNINGS="ignore" python3 -m pip install -vvv --no-cache-dir --force-reinstall --upgrade --quiet $(basename)
+	@python3 -m pip show bindev | awk '/^Version: / { print $2 }'
+	@#curl -sL -o /dev/null --head --fail https://pypi.org/manage/project/$(basename)/release/$(next)
+	@curl -sL -o /dev/null --head --fail https://pypi.org/simple/bindev/$(basename)-$(next)-py3-none-any.whl
+	@curl -sL -o /dev/null --head --fail https://pypi.org/simple/bindev/$(basename)-$(next)-tar.gz
+
+	@python3 -m pip cache --quiet remove $(basename)
+	@PYTHONWARNINGS="ignore" python3 -m pip install -vvv --no-cache-dir --force-reinstall --upgrade --quiet $(basename)
