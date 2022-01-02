@@ -76,6 +76,8 @@ bats::description() {
 ${2:+[$(blue "${2}")]}" >&3
 }
 
+export -f bats::description
+
 #######################################
 # Source bats libraries; clone/pull bats core and libraries
 # Globals:
@@ -90,12 +92,14 @@ bats::libs() {
     d="${BATS_SHARE}/${i}"
     if [ ! -d "${d}" ]; then
       git clone --quiet https://github.com/bats-core/"${i}".git "${d}"
-    elif [ "${1}" = '--force' ]; then
+    elif [ "${1-}" = '--force' ] && [ "${BATS_SUITE_TEST_NUMBER-0}" -eq 1 ]; then
      git -C "${d}" pull --quiet --force
     fi
     [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
   done
   command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
+
+  [ "${BATS_SUITE_TEST_NUMBER-0}" -ne 1 ] || genman "${BATS_TOP}"
 }
 
 #######################################
@@ -126,7 +130,6 @@ bats::tests() {
   tmp='/tmp/bats'
   output="${tests_root}/output"; [ ! -d "${output}" ] || { mkdir -p "${tmp}"; rm -rf "${tmp}";mv "${output}" "${tmp}"; }
   if ! $clean; then
-    genman "${BATS_TOP}"
     args=("${tests_root}" --print-output-on-failure --recursive )
 
     [ ! "${TESTS_JOBS-}" ] || args+=(--jobs "${TESTS_JOBS}")
