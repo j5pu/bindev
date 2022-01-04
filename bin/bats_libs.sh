@@ -4,15 +4,6 @@
 # add & updates bats libraries, sources libraries, set helper variables and run bats tests.
 #
 
-# <html><h2>Installation Directory for Bats and Bats Libraries</h2>
-# <p><strong><code>$BATS_SHARE</code></strong> contains the installation directory.</p>
-# </html>
-BATS_SHARE="/usr/local/share/${BASH_SOURCE[0]##*/}"; export BATS_SHARE
-
-# <html><h2>Bats Core Executable PATH</h2>
-# <p><strong><code>$BATS_SHARE_EXE</code></strong> contains the bats core executable path.</p>
-# </html>
-BATS_EXE_PATH="${BATS_SHARE}/bats-core/bin"; export BATS_EXE_PATH
 
 # <html><h2>Bats Test Filename Prefix</h2>
 # <p><strong><code>$BATS_TEST_PREFIX</code></strong> prefix of BATS_TEST_DIRNAME basename.</p>
@@ -31,11 +22,6 @@ BATS_TOP="$(git top)"; export BATS_TOP
 # <p><strong><code>$BATS_TOP_NAME</code></strong> basename of git top directory when sourced from a git dir.</p>
 # </html>
 BATS_TOP_BASENAME="${BATS_TOP##*/}"; export BATS_TOP_BASENAME
-
-# <html><h2>Git Top Semver Next</h2>
-# <p><strong><code>$BATS_SEMVER_NEXT</code></strong> contains the output of 'semver next'.</p>
-# </html>
-BATS_SEMVER_NEXT="$(semver next)"; export BATS_SEMVER_NEXT
 
 # <html><h2>Git Top Tests Path</h2>
 # <p><strong><code>$BATS_TOP_TESTS</code></strong> contains the git top directory with 'tests' basename added.</p>
@@ -62,10 +48,31 @@ BATS_LOCAL=false; [ "${TESTS_LOCAL}" -eq 0 ] || BATS_LOCAL=true; export BATS_LOC
 # shellcheck source=./../.envrc
 [ ! -f "${BATS_TOP-}/.envrc" ] || . "${BATS_TOP}/.envrc"
 
-[ "${BATS_SUITE_TEST_NUMBER-0}" -ne 1 ] || genman "${BATS_TOP}"
 
+#######################################
+# Source bats libraries; clone/pull bats core and libraries
+# Globals:
+#   BATS_SHARE
+# Arguments:
+#   0
+#######################################
+# shellcheck disable=SC1090
+bats::libs() {
+  local d i
+  for i in bats-assert bats-core bats-file bats-support; do
+    d="${BATS_SHARE}/${i}"
+    if [ ! -d "${d}" ]; then
+      git clone --quiet https://github.com/bats-core/"${i}".git "${d}"
+    elif [ "${1-}" = '--force' ] && [ "${BATS_SUITE_TEST_NUMBER-0}" -eq 1 ]; then
+     git -C "${d}" pull --quiet --force
+    fi
+    [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
+  done
+  command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
 
-#TODO: Añadir esto al bats.libs o hacer un bats.sh
+  [ "${BATS_SUITE_TEST_NUMBER-0}" -ne 1 ] || genman "${BATS_TOP}"
+}
+
 #######################################
 # Run bats tests and sets cwd to git top
 # Globals:
