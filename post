@@ -1,5 +1,0 @@
-#!/bin/sh
-
-#
-# post install script
-brew bundle --quiet --no-lock
