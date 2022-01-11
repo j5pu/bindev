@@ -1,0 +1,37 @@
+#!/bin/sh
+
+cat << EOF > /tmp/expect
+#!/usr/bin/expect -f
+exp_internal 1
+match_max 1000000
+set timeout -1
+spawn pypi-cleanup -u j5pu -p bindev --do-it --yes -r 0.4.6
+expect -re ".*Password.*"
+send -- '1Zaragoza$.\r\n'
+send -- '\r'
+EOF
+cat << EOF > /tmp/expect
+#!/usr/bin/expect -f
+exp_internal 1
+match_max 1000000
+set timeout -1
+spawn pypi-cleanup -u j5pu -p bindev --do-it --yes -r 0.4.6
+sleep 3
+expect -re ".*Password.*"
+set send_human {.1 .3 1 .05 2}
+send -h '1Zaragoza$.'
+EOF
+cat << EOF > /tmp/expect
+#!/usr/bin/expect -f
+exp_internal 1
+match_max 1000000
+set timeout -1
+spawn pypi-cleanup -u j5pu -p bindev --do-it --yes -r 0.4.7
+sleep 3
+expect -re ".*Password: "
+set send_human {.1 .3 1 .05 2}
+send -h '1Zaragoza$.\r'
+EOF
+
+chmod +x /tmp/expect
+expect -f /tmp/expect
