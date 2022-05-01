@@ -16,7 +16,7 @@ BATS_TEST_FILENAME_PREFIX="$(basename "${BATS_TEST_FILENAME:-}" .bats)"; export 
 # <html><h2>Git Top Path</h2>
 # <p><strong><code>$BATS_TOP</code></strong> contains the git top directory when sourced from a git dir.</p>
 # </html>
-BATS_TOP="$(git top)"; export BATS_TOP
+BATS_TOP="$(git rev-parse --show-toplevel)"; export BATS_TOP
 
 # <html><h2>Git Top Basename</h2>
 # <p><strong><code>$BATS_TOP_NAME</code></strong> basename of git top directory when sourced from a git dir.</p>
@@ -91,7 +91,7 @@ bats::tests() {
 
   if [ -d "${tests_root-}" ]; then
     cd "${tests_root}"
-    BATS_TOP="$(git top)"
+    BATS_TOP="$(git rev-parse --show-toplevel)"; export BATS_TOP
   else
     tests_root="${BATS_TOP}/tests"
   fi

@@ -35,13 +35,13 @@ main() {
     exit 1
   fi
 
-  if top="$(git top)"; then
+  if top="$(git rev-parse --show-toplevel)"; then
     cd "${top}"
   else
     echo "${0##*/}: $(pwd): Not a git repository"; exit 1
   fi
 
-  if git tags >/dev/null; then
+  if git tag -l >/dev/null; then
     if [ "${cmd}" = 'next' ]; then
       current="$(svu current "$@")"; next="$(svu next "$@")"
       if [ "${current}" = "${next}" ]; then

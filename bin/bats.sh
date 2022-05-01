@@ -25,17 +25,12 @@ BATS_TEST_FILENAME_PREFIX="$(basename "${BATS_TEST_FILENAME:-}" .bats)"; export 
 # <html><h2>Git Top Path</h2>
 # <p><strong><code>$BATS_TOP</code></strong> contains the git top directory when sourced from a git dir.</p>
 # </html>
-BATS_TOP="$(git top)"; export BATS_TOP
+BATS_TOP="$(git rev-parse --show-toplevel)"; export BATS_TOP
 
 # <html><h2>Git Top Basename</h2>
 # <p><strong><code>$BATS_TOP_NAME</code></strong> basename of git top directory when sourced from a git dir.</p>
 # </html>
 BATS_TOP_BASENAME="${BATS_TOP##*/}"; export BATS_TOP_BASENAME
-
-# <html><h2>Git Top Semver Next</h2>
-# <p><strong><code>$BATS_SEMVER_NEXT</code></strong> contains the output of 'semver next'.</p>
-# </html>
-BATS_SEMVER_NEXT="$(semver next)"; export BATS_SEMVER_NEXT
 
 # <html><h2>Git Top Tests Path</h2>
 # <p><strong><code>$BATS_TOP_TESTS</code></strong> contains the git top directory with 'tests' basename added.</p>
@@ -62,8 +57,39 @@ BATS_LOCAL=false; [ "${TESTS_LOCAL}" -eq 0 ] || BATS_LOCAL=true; export BATS_LOC
 # shellcheck source=./../.envrc
 [ ! -f "${BATS_TOP-}/.envrc" ] || . "${BATS_TOP}/.envrc"
 
+PATH="$BATS_TOP/bin:$PATH"; export PATH
+
+# <html><h2>Git Top Semver Next</h2>
+# <p><strong><code>$BATS_SEMVER_NEXT</code></strong> contains the output of 'semver next'.</p>
+# </html>
+BATS_SEMVER_NEXT="$(semver next)"; export BATS_SEMVER_NEXT
+
 [ "${BATS_SUITE_TEST_NUMBER-0}" -ne 1 ] || genman "${BATS_TOP}"
 
+
+#######################################
+# Source bats libraries; clone/pull bats core and libraries
+# Globals:
+#   BATS_SHARE
+# Arguments:
+#   0
+#######################################
+# shellcheck disable=SC1090
+bats::libs() {
+  local d i
+  for i in bats-assert bats-core bats-file bats-support; do
+    d="${BATS_SHARE}/${i}"
+    if [ ! -d "${d}" ]; then
+      git clone --quiet https://github.com/bats-core/"${i}".git "${d}"
+    elif [ "${1-}" = '--force' ] && [ "${BATS_SUITE_TEST_NUMBER-0}" -eq 1 ]; then
+     git -C "${d}" pull --quiet --force
+    fi
+    [ "${i}" = 'bats-core' ] || . "${d}"/load.bash
+  done
+  command -v assert_success >/dev/null || echo "${0##*/}": assert_success: command not found
+
+  [ "${BATS_SUITE_TEST_NUMBER-0}" -ne 1 ] || genman "${BATS_TOP}"
+}
 
 #TODO: Añadir esto al bats.libs o hacer un bats.sh
 #######################################

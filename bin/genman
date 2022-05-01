@@ -130,7 +130,7 @@ main(){
     esac
   done
 
-  cd "$(git top || { echo "${0##*/}: $(pwd): Not a git repository" >&2; exit 1; } )"
+  cd "$(git rev-parse --show-toplevel || { echo "${0##*/}: $(pwd): Not a git repository" >&2; exit 1; } )"
 
   author="$(git config user.username || { echo "$0: $(pwd): Invalid git username"; exit 1; })"
   orgname="$(git owner || { echo "$0: $(pwd): Invalid git owner"; exit 1; })"

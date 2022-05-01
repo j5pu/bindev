@@ -1,4 +1,4 @@
 # shellcheck shell=sh
-PATH="$(git top)/bin:${PATH}"
+PATH="$(git rev-parse --show-toplevel)/bin:${PATH}"
 . bats.sh
 
