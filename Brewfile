@@ -13,7 +13,6 @@ if RUBY_PLATFORM[/darwin/]
   tap "homebrew/services"
   tap "j5pu/bats-libs"
   tap "mas-cli/tap"
-  brew "asciidoctor"
   brew "makeself"
   brew "mas"
   brew "most"
